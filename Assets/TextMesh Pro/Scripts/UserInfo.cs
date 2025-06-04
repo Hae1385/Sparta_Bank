@@ -3,16 +3,17 @@ using UnityEngine;
 
 public class UserInfo : MonoBehaviour
 {
+    GameManager gameManager;
     public TextMeshProUGUI UserName;
     public TextMeshProUGUI Banlance;
     public TextMeshProUGUI Cash;
-    public string userName;
-    public int banlance;
-    public int cash;
-
+    [SerializeField] private string userName;
+    [SerializeField] private int banlance;
+    [SerializeField] private int cash;
+    
     private void Start()
     {
-        
+        gameManager = GameManager.Instance;
     }
 
     private void Update()
@@ -20,10 +21,23 @@ public class UserInfo : MonoBehaviour
         UpdateCash();
     }
 
-    public void UpdateCash()
+    public void UpdateCash(bool changeCash = false)
     {
-        UserName.text = userName;
-        Banlance.text = string.Format("{0:N0}", banlance);
-        Cash.text = string.Format("{0:N0}", cash);
+        bool change = changeCash;
+        if (userName != gameManager.name || banlance != gameManager.banlance || cash != gameManager.cash)
+        {
+            change = true;
+        }
+
+        if (change)
+        {
+            userName = gameManager.name;
+            banlance = gameManager.banlance;
+            cash = gameManager.cash;
+
+            UserName.text = userName;
+            Banlance.text = string.Format("{0:N0}", banlance);
+            Cash.text = string.Format("{0:N0}", cash);
+        }
     }
 }

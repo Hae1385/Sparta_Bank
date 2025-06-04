@@ -1,18 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class UserData : MonoBehaviour
+[System.Serializable]
+
+[CreateAssetMenu(fileName = "User", menuName = "New User")]
+public class UserData : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("UserInfo")]
+    public string UserName;
+    public int Banlance;
+    public int Cash;
 
-    // Update is called once per frame
-    void Update()
+    [Header("PrivateInfo")]
+    public string ID;
+    public string PW;
+
+    public void UserInit(string userName, int banlance, int cash, string id, string pw)
     {
-        
+        UserName = userName;
+        Banlance = banlance;
+        Cash = cash;
+        ID = id;
+        PW = pw;
     }
 }

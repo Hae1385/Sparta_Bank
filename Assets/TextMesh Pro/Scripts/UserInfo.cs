@@ -4,6 +4,7 @@ using UnityEngine;
 public class UserInfo : MonoBehaviour
 {
     GameManager gameManager;
+
     public TextMeshProUGUI UserName;
     public TextMeshProUGUI Banlance;
     public TextMeshProUGUI Cash;

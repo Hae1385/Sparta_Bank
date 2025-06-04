@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 [System.Serializable]
 
@@ -14,6 +15,7 @@ public class UserData : ScriptableObject
     public string ID;
     public string PW;
 
+
     public void UserInit(string userName, int banlance, int cash, string id, string pw)
     {
         UserName = userName;
@@ -21,5 +23,33 @@ public class UserData : ScriptableObject
         Cash = cash;
         ID = id;
         PW = pw;
+    }
+
+    public bool InputMoney(int inputCash)
+    {
+        if (inputCash <= Cash)
+        {
+            Cash -= inputCash;
+            Banlance += inputCash;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool OutputMoney(int outputCash)
+    {
+        if (outputCash <= Banlance)
+        {
+            Banlance -= outputCash;
+            Cash += outputCash;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

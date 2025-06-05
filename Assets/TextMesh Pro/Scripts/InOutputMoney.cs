@@ -11,115 +11,112 @@ public class InOutputMoney : MonoBehaviour
     public GameObject standard;
     public GameObject InputMoney;
     public GameObject OutputMoney;
+    public GameObject SendMoney;
     public Button InputMoneyBtn;
     public Button OutputMoneyBtn;
+    public Button SendMoneyBtn;
     public Button InputCancle;
     public Button OutputCancle;
+    public Button SendCancle;
 
-    [Header("InOutMoneyBtn")]
+    [Header("InputMoneyBtn")]
     public Button inputTenThousand;
     public Button inputThirtyThousand;
     public Button inputFiftyThousand;
     public TMP_InputField inputField;
     public Button inputFieldBtn;
 
+    [Header("OutputMoneyBtn")]
     public Button outputTenThousand;
     public Button outputThirtyThousand;
     public Button outputFiftyThousand;
     public TMP_InputField outputField;
     public Button outputFieldBtn;
+    public Button sendMoney;
 
-    public GameObject WarningSign;
+    [Header("SendMoneyTMP")]
+    public TMP_InputField sendInputID;
+    public TMP_InputField sendInputMoney;
 
     private void Start()
     {
         gameManager =FindObjectOfType<GameManager>();
-        userData = gameManager.userData;
+
+        userData = gameManager.userdata;
 
         InputMoney.SetActive(false);
         OutputMoney.SetActive(false);
-        WarningSign.SetActive(false);
+        SendMoney.SetActive(false);
 
         InputMoneyBtn.onClick.AddListener(OnInputMoneyBtn);
         OutputMoneyBtn.onClick.AddListener(OnOutputMoneyBtn);
+        SendMoneyBtn.onClick.AddListener(OnSendMoenyBtn);
         InputCancle.onClick.AddListener(OnCancleBtn);
         OutputCancle.onClick.AddListener(OnCancleBtn);
+        SendCancle.onClick.AddListener(OnCancleBtn);
 
-        inputTenThousand.onClick.AddListener(OnInputTen);
-        inputThirtyThousand.onClick.AddListener(OnInputThirty);
-        inputFiftyThousand.onClick.AddListener(OnInputFifty);
-        outputTenThousand.onClick.AddListener(OnOutputTen);
-        outputThirtyThousand.onClick.AddListener(OnOutputThirty);
-        outputFiftyThousand.onClick.AddListener(OnOutputFifty);
+        inputTenThousand.onClick.AddListener(() => OnInputMoney(10000));
+        inputThirtyThousand.onClick.AddListener(() => OnInputMoney(30000));
+        inputFiftyThousand.onClick.AddListener(() => OnInputMoney(50000));
+        outputTenThousand.onClick.AddListener(() => OnOutputMoney(10000));
+        outputThirtyThousand.onClick.AddListener(() => OnOutputMoney(30000));
+        outputFiftyThousand.onClick.AddListener(() => OnOutputMoney(50000));
         inputFieldBtn.onClick.AddListener(OnInputField);
         outputFieldBtn.onClick.AddListener(OnOutputField);
+        sendMoney.onClick.AddListener(OnSendMoney);
     }
 
     public void OnInputMoneyBtn()
     {
+        if (gameManager.userdata == null)
+        {
+            return;
+        }
         standard.SetActive(false);
         InputMoney.SetActive(true);
     }
-
+    
     public void OnOutputMoneyBtn()
     {
+        if (gameManager.userdata == null)
+        {
+            return;
+        }
         standard.SetActive(false);
         OutputMoney.SetActive(true);
+    }
+
+    public void OnSendMoenyBtn()
+    {
+        if (gameManager.userdata == null)
+        {
+            return;
+        }
+        standard.SetActive(false);
+        SendMoney.SetActive(true);
     }
 
     public void OnCancleBtn()
     {
         InputMoney.SetActive(false);
         OutputMoney.SetActive(false);
+        SendMoney.SetActive(false);
         standard.SetActive(true);
     }
 
-    public void OnInputTen()
+    public void OnInputMoney(int money)
     {
-        if (!gameManager.userData.InputMoney(10000))
+        if (!gameManager.userdata.InputMoney(money))
         {
-            WarningSign.SetActive(true);
-        }
-
-    }
-
-    public void OnInputThirty()
-    {
-        if (!gameManager.userData.InputMoney(30000))
-        {
-            WarningSign.SetActive(true);
+            gameManager.warningSign.SetTextWrarning("금액이\n부족합니다");
         }
     }
 
-    public void OnInputFifty()
+    public void OnOutputMoney(int money)
     {
-        if (!gameManager.userData.InputMoney(50000))
+        if (!gameManager.userdata.OutputMoney(money))
         {
-            WarningSign.SetActive(true);
-        }
-    }
-
-    public void OnOutputTen()
-    {
-        if (!gameManager.userData.OutputMoney(10000))
-        {
-            WarningSign.SetActive(true);
-        }
-    }
-
-    public void OnOutputThirty()
-    {
-        if (!gameManager.userData.OutputMoney(30000))
-        {
-            WarningSign.SetActive(true);
-        }
-    }
-
-    public void OnOutputFifty()
-    {
-        if (!gameManager.userData.OutputMoney(50000))
-        {
-            WarningSign.SetActive(true);
+            gameManager.warningSign.SetTextWrarning("금액이\n부족합니다");
         }
     }
 
@@ -130,14 +127,14 @@ public class InOutputMoney : MonoBehaviour
 
         if(int.TryParse(input, out inputvalue))
         {
-            if (!gameManager.userData.InputMoney(inputvalue))
+            if (!gameManager.userdata.InputMoney(inputvalue))
             {
-                WarningSign.SetActive(true);
+                gameManager.warningSign.SetTextWrarning("금액이\n부족합니다");
             }
         }
         else
         {
-            WarningSign.SetActive(true);
+            gameManager.warningSign.SetTextWrarning("금액이\n부족합니다");
         }
     }
 
@@ -148,14 +145,68 @@ public class InOutputMoney : MonoBehaviour
 
         if (int.TryParse(output, out outputvalue))
         {
-            if (!gameManager.userData.OutputMoney(outputvalue))
+            if (!gameManager.userdata.OutputMoney(outputvalue))
             {
-                WarningSign.SetActive(true);
+                gameManager.warningSign.SetTextWrarning("금액이\n부족합니다");
             }
         }
         else
         {
-            WarningSign.SetActive(true);
+            gameManager.warningSign.SetTextWrarning("금액이\n부족합니다");
         }
+    }
+
+    public void OnSendMoney()
+    {
+        string inputID = sendInputID.text;
+        string inputMoney = sendInputMoney.text;
+        int inputMoneyValue;
+        int.TryParse(inputMoney, out inputMoneyValue);
+
+        UserData foundUser;
+        int founded;
+        if(FindUser(inputID, inputMoneyValue, out foundUser, out founded))
+        {
+            gameManager.warningSign.SetTextWrarning("송금\n완료");
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    public bool FindUser(string inputID, int inputMoney, out UserData match, out int matchNumber)
+    {
+        match = null;
+        matchNumber = -1;
+
+        if (gameManager.userDatas == null || gameManager.userDatas.Length == 0)
+        {
+            return false;
+        }
+        for (int i = 0; i < gameManager.userDatas.Length; i++)
+        {
+            if (gameManager.userDatas[i].ID == inputID)
+            {
+                match = gameManager.userDatas[i];
+                matchNumber = i;
+
+                if (inputMoney > gameManager.userdata.Banlance)
+                {
+                    gameManager.warningSign.SetTextWrarning("금액이\n부족합니다");
+                    return false;
+                }
+                if (inputMoney == 0)
+                {
+                    gameManager.warningSign.SetTextWrarning("올바른 값을\n입력해주세요");
+                    return false;
+                }
+                gameManager.userdata.Banlance -= inputMoney;
+                gameManager.userDatas[i].Banlance += inputMoney;
+                return true;
+            }
+        }
+        gameManager.warningSign.SetTextWrarning("대상이\n잘못됐습니다");
+        return false;
     }
 }

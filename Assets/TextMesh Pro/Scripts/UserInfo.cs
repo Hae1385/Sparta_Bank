@@ -25,16 +25,19 @@ public class UserInfo : MonoBehaviour
     public void UpdateCash(bool changeCash = false)
     {
         bool change = changeCash;
-        if (userName != gameManager.name || banlance != gameManager.banlance || cash != gameManager.cash)
+        if (gameManager.userdata == null)
+            return;
+
+        if (userName != gameManager.userdata.UserName || banlance != gameManager.userdata.Banlance || cash != gameManager.userdata.Cash)
         {
             change = true;
         }
 
         if (change)
         {
-            userName = gameManager.name;
-            banlance = gameManager.banlance;
-            cash = gameManager.cash;
+            userName = gameManager.userdata.UserName;
+            banlance = gameManager.userdata.Banlance;
+            cash = gameManager.userdata.Cash;
 
             UserName.text = userName;
             Banlance.text = string.Format("{0:N0}", banlance);

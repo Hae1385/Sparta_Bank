@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da6a650369d24f144878a7cf443d22d1, type: 3}
-  m_Name: Hong
+  m_Name: qweqweq
   m_EditorClassIdentifier: 
-  UserName: "\uD64D\uAE38\uB3D9"
-  Banlance: 500000
-  Cash: 1000000
-  ID: 
-  PW: 
+  UserName: qweqweq
+  Banlance: 0
+  Cash: 0
+  ID: qweqeqwq
+  PW: qweqeqe

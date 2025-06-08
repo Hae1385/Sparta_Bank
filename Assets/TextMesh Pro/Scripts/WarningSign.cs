@@ -19,7 +19,7 @@ public class WarningSign : MonoBehaviour
         warningSignpopup.gameObject.SetActive(true);
         warningSign.text = warning;
     }
-
+    
     private void onClickOk()
     {
         this.gameObject.SetActive(false);

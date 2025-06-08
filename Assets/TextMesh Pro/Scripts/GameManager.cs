@@ -41,9 +41,7 @@ public class GameManager : MonoBehaviour
         userdata = null;
 
         LoginPopup.SetActive(false);
-        warningSign.SetTextWrarning("Warning");
-
-
+        
         loginPopupButton.onClick.AddListener(SetPopupLogin);
         loginButton.onClick.AddListener(OnClickLogin);
         loginCancle.onClick.AddListener(SetPopupLoginCancle);

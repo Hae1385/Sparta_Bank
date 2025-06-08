@@ -38,13 +38,13 @@ public class UserData : ScriptableObject
             return false;
         }
     }
-
-    public bool OutputMoney(int outputCash)
+    
+    public bool OutputMoney(int outputCash) 
     {
-        if (outputCash <= Banlance)
+        if (outputCash <= Banlance)  
         {
             Banlance -= outputCash;
-            Cash += outputCash;
+            Cash += outputCash;  
             return true;
         }
         else

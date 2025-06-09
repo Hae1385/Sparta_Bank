@@ -4864,8 +4864,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d234345878dc41b4ca25ea925e37b325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userDatas: []
-  userdata: {fileID: 0}
+  userdata:
+    UserName: 
+    Banlance: 0
+    Cash: 0
+    ID: 
+    PW: 
   name: 
   cash: 0
   banlance: 0
@@ -6355,8 +6359,8 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
@@ -12656,8 +12660,8 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 0
-  m_InputType: 0
+  m_ContentType: 7
+  m_InputType: 2
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0

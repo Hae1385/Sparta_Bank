@@ -1,15 +1,11 @@
-﻿using System.Runtime.InteropServices.WindowsRuntime;
-using TMPro;
-using Unity.VisualScripting;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Windows;
 
 public class GameManager : MonoBehaviour
 {
     [Header("UserInfo")]
     public static GameManager Instance;
-    public UserData[] userDatas;
     public UserData userdata;
     public string name;
     public int cash;
@@ -35,7 +31,6 @@ public class GameManager : MonoBehaviour
     {
         userDataList = UserDataManager.LoadUsers();
         warningSign = FindObjectOfType<WarningSign>();
-        //warningSign = FindObjectOfType<WarningSign>();
     }
     private void Start()
     {
@@ -57,24 +52,24 @@ public class GameManager : MonoBehaviour
 
     private void userDataChange(int i = 0, bool dataChange = false)
     {
-        if (userDatas == null || userDatas.Length <= i)
+        if (userDataList.users == null || userDataList.users.Count <= i)
         {
             return;
         }
 
         bool change = dataChange;
-        if (name != userDatas[i].UserName || banlance != userDatas[i].Banlance || cash != userDatas[i].Cash || ID != userDatas[i].ID || PW != userDatas[i].PW)
+        if (name != userDataList.users[i].UserName || banlance != userDataList.users[i].Banlance || cash != userDataList.users[i].Cash || ID != userDataList.users[i].ID || PW != userDataList.users[i].PW)
         {
             change = true;
         }
 
         if (change)
         {
-            name = userDatas[i].UserName;
-            banlance = userDatas[i].Banlance;
-            cash = userDatas[i].Cash;
-            ID = userDatas[i].ID;
-            PW = userDatas[i].PW;
+            name = userDataList.users[i].UserName;
+            banlance = userDataList.users[i].Banlance;
+            cash = userDataList.users[i].Cash;
+            ID = userDataList.users[i].ID;
+            PW = userDataList.users[i].PW;
         }
     }
 
@@ -101,20 +96,21 @@ public class GameManager : MonoBehaviour
         match = null;
         matchNumber = -1;
 
-        if (userDatas == null || userDatas.Length == 0)
+        if (userDataList == null || userDataList.users == null || userDataList.users.Count == 0)
         {
             return false;
         }
 
-        for (int i = 0; i < userDatas.Length; i++)
+        for (int i = 0; i < userDataList.users.Count; i++)
         {
-            if (userDatas[i].ID == inputID)
+            if (userDataList.users[i].ID == inputID)
             {
-                if (userDatas[i].PW == inputPW)
+                if (userDataList.users[i].PW == inputPW)
                 {
-                    match = userDatas[i];
+                    match = userDataList.users[i];
                     matchNumber = i;
-                    userdata = userDatas[i];
+                    userdata = userDataList.users[i];
+                    LoginPopup.SetActive(false);
                     return true;
                 }
                 else
@@ -142,11 +138,6 @@ public class GameManager : MonoBehaviour
     {
         LoginPopup.SetActive(false);
     }
-
-    //public void UpdateUserData()
-    //{
-    //    userDatas = Resources.LoadAll<UserData>("Data/UserData");
-    //}
 
     public void AddUser(string name, string id, string pw)
     {

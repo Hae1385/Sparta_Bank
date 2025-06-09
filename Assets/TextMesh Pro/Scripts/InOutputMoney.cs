@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class InOutputMoney : MonoBehaviour
 {
     GameManager gameManager;
-    UserData userData;
 
     [Header("InOutButton")]
     public GameObject standard;
@@ -41,8 +40,6 @@ public class InOutputMoney : MonoBehaviour
     private void Start()
     {
         gameManager =FindObjectOfType<GameManager>();
-
-        userData = gameManager.userdata;
 
         InputMoney.SetActive(false);
         OutputMoney.SetActive(false);
@@ -110,6 +107,11 @@ public class InOutputMoney : MonoBehaviour
         {
             gameManager.warningSign.SetTextWrarning("금액이\n부족합니다");
         }
+        else
+        {
+            UserDataManager.SaveUsers(gameManager.userDataList);
+            gameManager.userInfo.UpdateCash(true);
+        }
     }
 
     public void OnOutputMoney(int money)
@@ -118,6 +120,11 @@ public class InOutputMoney : MonoBehaviour
         {
             gameManager.warningSign.SetTextWrarning("금액이\n부족합니다");
         }
+        else
+        {
+            UserDataManager.SaveUsers(gameManager.userDataList);
+            gameManager.userInfo.UpdateCash(true);
+        }
     }
 
     public void OnInputField()
@@ -125,11 +132,16 @@ public class InOutputMoney : MonoBehaviour
         string input = inputField.text;
         int inputvalue;
 
-        if(int.TryParse(input, out inputvalue))
+        if (int.TryParse(input, out inputvalue))
         {
             if (!gameManager.userdata.InputMoney(inputvalue))
             {
                 gameManager.warningSign.SetTextWrarning("금액이\n부족합니다");
+            }
+            else
+            {
+                UserDataManager.SaveUsers(gameManager.userDataList);
+                gameManager.userInfo.UpdateCash(true);
             }
         }
         else
@@ -148,6 +160,11 @@ public class InOutputMoney : MonoBehaviour
             if (!gameManager.userdata.OutputMoney(outputvalue))
             {
                 gameManager.warningSign.SetTextWrarning("금액이\n부족합니다");
+            }
+            else
+            {
+                UserDataManager.SaveUsers(gameManager.userDataList);
+                gameManager.userInfo.UpdateCash(true);
             }
         }
         else
@@ -168,6 +185,8 @@ public class InOutputMoney : MonoBehaviour
         if(FindUser(inputID, inputMoneyValue, out foundUser, out founded))
         {
             gameManager.warningSign.SetTextWrarning("송금\n완료");
+            UserDataManager.SaveUsers(gameManager.userDataList);
+            gameManager.userInfo.UpdateCash(true);
         }
         else
         {
@@ -180,15 +199,15 @@ public class InOutputMoney : MonoBehaviour
         match = null;
         matchNumber = -1;
 
-        if (gameManager.userDatas == null || gameManager.userDatas.Length == 0)
+        if (gameManager.userDataList.users == null || gameManager.userDataList.users.Count == 0)
         {
             return false;
         }
-        for (int i = 0; i < gameManager.userDatas.Length; i++)
+        for (int i = 0; i < gameManager.userDataList.users.Count; i++)
         {
-            if (gameManager.userDatas[i].ID == inputID)
+            if (gameManager.userDataList.users[i].ID == inputID)
             {
-                match = gameManager.userDatas[i];
+                match = gameManager.userDataList.users[i];
                 matchNumber = i;
 
                 if (inputMoney > gameManager.userdata.Banlance)
@@ -202,7 +221,7 @@ public class InOutputMoney : MonoBehaviour
                     return false;
                 }
                 gameManager.userdata.Banlance -= inputMoney;
-                gameManager.userDatas[i].Banlance += inputMoney;
+                gameManager.userDataList.users[i].Banlance += inputMoney;
                 return true;
             }
         }

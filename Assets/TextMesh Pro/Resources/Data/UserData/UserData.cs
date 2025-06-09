@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -7,7 +6,8 @@ public class UserDataList
 {
     public List<UserData> users = new List<UserData>();
 }
-public class UserData : MonoBehaviour
+[System.Serializable]
+public class UserData
 {
     [Header("UserInfo")]
     public string UserName;

@@ -1,11 +1,9 @@
 ﻿using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AddUser : MonoBehaviour
 {
-    private UserData userData;
     GameManager gameManager;
 
     public TMP_InputField inputName;
@@ -47,6 +45,7 @@ public class AddUser : MonoBehaviour
 
         gameManager.AddUser(name, id, pw);
         Debug.Log(Application.persistentDataPath);
+        Cancle();
     }
     //userData = ScriptableObject.CreateInstance<UserData>()
 }

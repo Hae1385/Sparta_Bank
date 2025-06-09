@@ -15,11 +15,7 @@ public class UserInfo : MonoBehaviour
     private void Start()
     {
         gameManager = GameManager.Instance;
-    }
-
-    private void Update()
-    {
-        UpdateCash();
+        UpdateCash(true);
     }
 
     public void UpdateCash(bool changeCash = false)

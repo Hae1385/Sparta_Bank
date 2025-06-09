@@ -33,19 +33,20 @@ public class AddUser : MonoBehaviour
         string id = inputID.text;
         string pw = inputPW.text;
 
-        userData = ScriptableObject.CreateInstance<UserData>();
-        userData.UserName = name;
-        userData.Banlance = 0;
-        userData.Cash = 0;
-        userData.ID = id;
-        userData.PW = pw;
+        //userData = ScriptableObject.CreateInstance<UserData>();
+        //userData.UserName = name;
+        //userData.Banlance = 0;
+        //userData.Cash = 0;
+        //userData.ID = id;
+        //userData.PW = pw;
 
-        string assetPath = $"Assets/TextMesh Pro/Resources/Data/UserData/{id}.asset";
-        AssetDatabase.CreateAsset(userData, assetPath);
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
+        //string assetPath = $"Assets/TextMesh Pro/Resources/Data/UserData/{id}.asset";
+        //AssetDatabase.CreateAsset(userData, assetPath);
+        //AssetDatabase.SaveAssets();
+        //AssetDatabase.Refresh();
 
-        gameManager.UpdateUserData();
+        gameManager.AddUser(name, id, pw);
+        Debug.Log(Application.persistentDataPath);
     }
     //userData = ScriptableObject.CreateInstance<UserData>()
 }

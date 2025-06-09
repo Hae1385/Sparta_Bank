@@ -27,11 +27,13 @@ public class GameManager : MonoBehaviour
     public GameObject LoginPopup;
     public Button loginCancle;
 
+    public UserDataList userDataList;
     public WarningSign warningSign;
+    public UserInfo userInfo;
 
     private void Awake()
     {
-        userDatas = Resources.LoadAll<UserData>("Data/UserData");
+        userDataList = UserDataManager.LoadUsers();
         warningSign = FindObjectOfType<WarningSign>();
         //warningSign = FindObjectOfType<WarningSign>();
     }
@@ -86,7 +88,11 @@ public class GameManager : MonoBehaviour
 
         if (TryLogin(inputID, inputPW, out foundUser, out userNumber))
         {
-            userDataChange(userNumber);
+            userdata = foundUser;
+            if (userInfo !=  null)
+            {
+                userInfo.UpdateCash(true);
+            }
         }
     }
 
@@ -137,8 +143,23 @@ public class GameManager : MonoBehaviour
         LoginPopup.SetActive(false);
     }
 
-    public void UpdateUserData()
+    //public void UpdateUserData()
+    //{
+    //    userDatas = Resources.LoadAll<UserData>("Data/UserData");
+    //}
+
+    public void AddUser(string name, string id, string pw)
     {
-        userDatas = Resources.LoadAll<UserData>("Data/UserData");
+        UserData newUser = new UserData
+        {
+            UserName = name,
+            Banlance = 0,
+            Cash = 0,
+            ID = id,
+            PW = pw
+        };
+        userDataList.users.Add(newUser);
+        UserDataManager.SaveUsers(userDataList);
+        warningSign.SetTextWrarning("가입이 완료되었습니다");
     }
 }

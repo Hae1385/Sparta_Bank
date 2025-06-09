@@ -1,10 +1,13 @@
-﻿using Unity.VisualScripting;
+﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
-
-[CreateAssetMenu(fileName = "User", menuName = "New User")]
-public class UserData : ScriptableObject
+public class UserDataList
+{
+    public List<UserData> users = new List<UserData>();
+}
+public class UserData : MonoBehaviour
 {
     [Header("UserInfo")]
     public string UserName;

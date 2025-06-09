@@ -4879,7 +4879,10 @@ MonoBehaviour:
   loginPopupButton: {fileID: 1200068059}
   LoginPopup: {fileID: 1867765329}
   loginCancle: {fileID: 123259269}
+  userDataList:
+    users: []
   warningSign: {fileID: 2117219482}
+  userInfo: {fileID: 1445295923}
 --- !u!1 &839611173
 GameObject:
   m_ObjectHideFlags: 0
